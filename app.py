@@ -1,25 +1,47 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET"])
-def home():
-    return "RobloxBridge is online!"
+text = ""
+index = 0
 
-@app.route("/logic", methods=["GET", "POST"])
-def logic():
 
-    if request.method == "POST":
-        data = request.get_json(silent=True)
+def encode(character):
+    if character == " ":
+        return "10000000"
 
-        if not isinstance(data, dict):
-            return "0", 400
+    number = ord(character.upper()) - 64
+    bits = format(number, "06b")
+    shift = "1" if character.isupper() else "0"
 
-        value = data.get("value")
+    return "1" + shift + bits
 
-        print("Roblox sent:", value) 
-        # Return 42 as an 8-bit response
-        return jsonify({"value": "00101010"})  
 
-    return jsonify({"value": "00101010"})
-  
+@app.post("/r")
+def receive():
+    global text, index
+
+    data = request.get_json()
+    text = data["text"][:512]
+    index = 0
+
+    return {"status": "received"}
+
+
+@app.get("/logic")
+def send():
+    global index
+
+    if index >= len(text):
+        return {"value": "00000000"}
+
+    character = text[index]
+    index += 1
+
+    return {"value": encode(character)}
+
+
+@app.get("/health")
+def health():
+    return {"ok": True}
+    

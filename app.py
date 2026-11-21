@@ -20,7 +20,7 @@ def logic():
         print("Roblox sent:", value)
 
         # Return 42 as an 8-bit response
-        return "42"
+        return bytes([42])
 
-    return "42"
+    return bytes([42])
   

@@ -19,9 +19,7 @@ def logic():
 
         print("Roblox sent:", value) 
         # Return 42 as an 8-bit response
-        return jsonify(f{"value": {bytes([42])}})
+        return jsonify({"value": "00101010"})  
 
-    
-
-    return jsonify({"value": {bytes([42])}})
+    return jsonify({"value": "00101010"})
   

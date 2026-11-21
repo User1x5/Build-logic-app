@@ -17,10 +17,11 @@ def logic():
 
         value = data.get("value")
 
-        print("Roblox sent:", value)
-
+        print("Roblox sent:", value) 
         # Return 42 as an 8-bit response
-        return bytes([42])
+        return jsonify({"value": bytes([42])})
 
-    return bytes([42])
+    
+
+    return jsonify({"value": bytes([42])})
   

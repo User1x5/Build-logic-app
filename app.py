@@ -8,7 +8,7 @@ index = 0
 
 
 def encode(character):
-    # Six-bit positions for normal characters
+    # 6 bit
     symbols = {
         "-": "100101",
         "=": "100110",
@@ -33,7 +33,7 @@ def encode(character):
         '"': "110111"
     }
 
-    # Shifted keyboard characters
+    # shift
     shifted = {
         "!": "1",
         "@": "2",
@@ -64,11 +64,11 @@ def encode(character):
         "^": '"'
     }
 
-    # Space
+    # space
     if character == " ":
         return "10000000"
 
-    # Letters
+    # letter
     if "a" <= character.lower() <= "z" and len(character) == 1:
         number = ord(character.lower()) - 96
         bits = format(number, "06b")
@@ -76,7 +76,7 @@ def encode(character):
 
         return "1" + shift + bits
 
-    # Shifted symbols
+    # hi vlcplayer
     if character in shifted:
         base = shifted[character]
         return "11" + symbols.get(
@@ -84,11 +84,11 @@ def encode(character):
             format(ord(base) - 48, "06b")
         )
 
-    # Normal symbols
+    # 4 normal
     if character in symbols:
         return "10" + symbols[character]
 
-    # Unsupported character
+    # unknown
     return "10000000"
 
 
